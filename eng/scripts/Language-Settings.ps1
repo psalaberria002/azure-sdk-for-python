@@ -36,6 +36,7 @@ function Get-AllPackageInfoFromRepo ($serviceDirectory)
     Pop-Location
   }
 
+  Write-Host "If there is a case that we aren't handling when walking the pkg prop lines, we should see it here."
   Write-Host $allPkgPropLines
 
   if ($allPkgPropLines) {
