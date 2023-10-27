@@ -103,6 +103,16 @@ if ($allPackageProperties)
     {
       New-Item -ItemType Directory -Force -Path $outDirectory
     }
+
+    foreach($pkg in $allPackageProperties)
+    {
+        Write-Host "Package Name: $($pkg.Name)"
+        Write-Host "Package Version: $($pkg.Version)"
+        Write-Host "Package SDK Type: $($pkg.SdkType)"
+        Write-Host "Artifact Name: $($pkg.ArtifactName)"
+        Write-Host "Release date: $($pkg.ReleaseStatus)"
+    }
+
     foreach($pkg in $allPackageProperties)
     {
         Write-Host "Package Name: $($pkg.Name)"

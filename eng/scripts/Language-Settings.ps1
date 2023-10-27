@@ -42,6 +42,8 @@ function Get-AllPackageInfoFromRepo ($serviceDirectory)
   if ($allPkgPropLines) {
     foreach ($line in $allPkgPropLines)
     {
+      Write-Host "This is the `"$line`""
+
       $pkgInfo = ($line -Split " ")
       $packageName = $pkgInfo[0]
       $packageVersion = $pkgInfo[1]
@@ -63,6 +65,8 @@ function Get-AllPackageInfoFromRepo ($serviceDirectory)
       $allPackageProps += $pkgProp
     }
   }
+
+  Write-Host "Returning $allPackageProps"
   return $allPackageProps
 }
 
