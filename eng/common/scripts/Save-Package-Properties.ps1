@@ -94,9 +94,6 @@ function GetRelativePath($path) {
 $exportedPaths = @{}
 $allPackageProperties = Get-AllPkgProperties $serviceDirectory
 
-Write-Host "This is what we got for allPackageProperties, which will be empty improperly"
-Write-Host $allPackageProperties
-
 if ($allPackageProperties)
 {
     if (-not (Test-Path -Path $outDirectory))
