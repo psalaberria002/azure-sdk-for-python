@@ -16,6 +16,7 @@ if __name__ == "__main__":
         if re.search(r"sdk[\\/][^\\/]+[\\/][^\\/]+$", root):
             if "setup.py" in files:
                 try:
+                    print("Attempting to parse {root}")
                     parsed = ParsedSetup.from_path(root)
 
                     print(
@@ -24,5 +25,6 @@ if __name__ == "__main__":
                         )
                     )
                 except Exception as e:
+                    print("failed to parse the package")
                     # Skip setup.py if the package cannot be parsed
                     print(e)

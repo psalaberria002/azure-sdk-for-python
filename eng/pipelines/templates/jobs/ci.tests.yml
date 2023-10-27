@@ -124,6 +124,11 @@ jobs:
               artifactName: 'packages'
               targetPath: $(Build.ArtifactStagingDirectory)
 
+          - pwsh: |
+              python -m pip install "./tools/azure-sdk-tools[build]"
+              python -Wignore (Join-path eng scripts get_package_properties.py) -s "sdk/template"
+            displayName: Invoke Get Package Properties bare
+
           - template: ../steps/set-dev-build.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
