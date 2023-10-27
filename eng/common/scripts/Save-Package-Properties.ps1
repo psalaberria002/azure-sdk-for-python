@@ -91,6 +91,9 @@ function GetRelativePath($path) {
   return $relativePath
 }
 
+Write-Host "Working Directory is $($pwd.Path)"
+Write-Host "Service Directory is $serviceDirectory"
+
 $exportedPaths = @{}
 $allPackageProperties = Get-AllPkgProperties $serviceDirectory
 
