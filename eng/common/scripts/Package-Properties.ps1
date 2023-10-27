@@ -90,6 +90,9 @@ function Get-PkgProperties
     )
 
     $allPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
+
+    Write-Host "We are getting this many packages from Get-AllPkgProperties $($allPackageProps.Length)"
+
     $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
 
     if ($pkgProps.Count -ge 1)
