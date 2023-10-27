@@ -62,10 +62,14 @@ function Get-AllPackageInfoFromRepo ($serviceDirectory)
       $pkgProp.IsNewSdk = $isNewSdk
       $pkgProp.SdkType = $sdkType
       $pkgProp.ArtifactName = $packageName
-      $allPackageProps += $pkgProp
+
+      if ($packageName) {
+        $allPackageProps += $pkgProp
+      }
     }
   }
 
+  Write-Host "Length $($allPackageProps.Length)"
   Write-Host "Returning $allPackageProps"
   return $allPackageProps
 }
