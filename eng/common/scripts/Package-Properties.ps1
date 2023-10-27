@@ -114,19 +114,23 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
 
     if (Test-Path "Function:Get-AllPackageInfoFromRepo")
     {
+        Write-Host "Get-AllPackageInfoFromRepo"
         $pkgPropsResult = Get-AllPackageInfoFromRepo -ServiceDirectory $serviceDirectory
     }
     else
     {
+        
         if ([string]::IsNullOrEmpty($ServiceDirectory))
         {
             foreach ($dir in (Get-ChildItem (Join-Path $RepoRoot "sdk") -Directory))
             {
+                Write-Host "Get-PkgPropsForEntireService subdirectory $($dir.FullName)"
                 $pkgPropsResult += Get-PkgPropsForEntireService -serviceDirectoryPath $dir.FullName
             }
         }
         else
         {
+            Write-Host "Get-PkgPropsForEntireService subdirectory $($dir.FullName)"
             $pkgPropsResult = Get-PkgPropsForEntireService -serviceDirectoryPath (Join-Path $RepoRoot "sdk" $ServiceDirectory)
         }
     }
