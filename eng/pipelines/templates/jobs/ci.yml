@@ -105,55 +105,6 @@ jobs:
       parameters:
         BuildTargetingString: ${{ parameters.BuildTargetingString }}
 
-    - template: ../steps/build-extended-artifacts.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        BeforePublishSteps: ${{ parameters.BeforePublishSteps }}
-        BuildDocs: ${{ parameters.BuildDocs }}
-        TestPipeline: ${{ parameters.TestPipeline }}
-        Artifacts: ${{ parameters.Artifacts }}
-
-  - job: 'Analyze'
-    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], 'true'))
-
-    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-
-    dependsOn:
-      - 'Build_Extended'
-
-    pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: MMSUbuntu20.04
-
-    steps:
-    - template: /eng/pipelines/templates/steps/targeting-string-resolve.yml
-      parameters:
-        BuildTargetingString: ${{ parameters.BuildTargetingString }}
-
-    - template: /eng/common/pipelines/templates/steps/check-spelling.yml
-      parameters:
-        ContinueOnError: false
-
-    - template: /eng/common/pipelines/templates/steps/verify-links.yml
-      parameters:
-        ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-          Directory: ''
-          Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-        ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-          Directory: sdk/${{ parameters.ServiceDirectory }}
-        CheckLinkGuidance: $true
-
-    - template: ../steps/analyze.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        TestMarkArgument: ${{ parameters.TestMarkArgument }}
-        AdditionalTestArgs: '--wheel_dir="$(Build.ArtifactStagingDirectory)"'
-        TestPipeline: ${{ parameters.TestPipeline }}
-        Artifacts: ${{ parameters.Artifacts }}
-        VerifyAutorest: ${{ parameters.VerifyAutorest }}
-        ValidateFormatting: ${{ parameters.ValidateFormatting }}
-        GenerateApiReviewForManualOnly: ${{ parameters.GenerateApiReviewForManualOnly }}
-
   - job: Compliance
     pool:
       name: azsdk-pool-mms-win-2022-general
