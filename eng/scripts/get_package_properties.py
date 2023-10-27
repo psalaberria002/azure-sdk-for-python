@@ -23,6 +23,6 @@ if __name__ == "__main__":
                             parsed.name, parsed.version, parsed.is_new_sdk, os.path.dirname(parsed.setup_filename)
                         )
                     )
-                except:
+                except Exception as e:
                     # Skip setup.py if the package cannot be parsed
-                    pass
+                    print(e)
