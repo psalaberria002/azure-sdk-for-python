@@ -138,6 +138,8 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null)
         }
     }
 
+
+    Write-Host "Length from GetAllPkgProperties is $($pkgPropsResult.Length)"
     return $pkgPropsResult
 }
 
