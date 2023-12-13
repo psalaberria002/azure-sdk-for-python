@@ -47,9 +47,13 @@ stages:
                           ServiceName: ${{parameters.ServiceDirectory}}
                           ForRelease: true
 
-                    - bash: |
-                        which python
-                      displayName: What python is being used?
+                    - pwsh: |
+                        $folder = python -c "import site; print(site.getsitepackages())"
+                        Write-Host $folder.Trim()
+
+                        Get-ChildItem -R $folder
+                      displayName: what is in site packages?
+                     
 
                     - task: PythonScript@0
                       displayName: Verify CI enabled
