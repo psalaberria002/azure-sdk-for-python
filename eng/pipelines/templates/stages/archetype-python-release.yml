@@ -51,7 +51,7 @@ stages:
                         $folder = python -c "import site; print(site.getsitepackages())"
                         Write-Host $folder.Trim()
 
-                        Get-ChildItem -R $folder
+                        Get-ChildItem -R $folder.Trim()
                       displayName: what is in site packages?
                      
 
