@@ -48,10 +48,12 @@ stages:
                           ForRelease: true
 
                     - pwsh: |
+                        python -m pip freeze
                         $folder = python -c "import site; print(site.getsitepackages())"
-                        Write-Host $folder.Trim()
 
-                        Get-ChildItem -R $folder.Trim()
+                        Get-ChildItem -R /usr/local/lib/python3.8/dist-packages | % { Write-Host $_.FullName }
+                        Get-ChildItem -R /usr/lib/python3/dist-packages | % { Write-Host $_.FullName }
+                        Get-ChildItem -R /usr/lib/python3.8/dist-packages | % { Write-Host $_.FullName }
                       displayName: what is in site packages?
                      
 
