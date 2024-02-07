@@ -102,7 +102,7 @@ extends:
       - stage: Build
         variables:
           BuildId: $(Build.BuildId)
-          system.debug: ${{ parameters.debug }}
+          system.debug: true
           REPOROOT: $(Build.SourcesDirectory)
           WINDOWS_OUTPUTROOT: $(REPOROOT)\out
           WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
