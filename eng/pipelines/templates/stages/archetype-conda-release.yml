@@ -1,32 +1,53 @@
+resources:
+  repositories:
+    - repository: 1ESPipelineTemplates
+      type: git
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
+      ref: refs/tags/release
+
 parameters:
-- name: CondaArtifacts
-  type: object
-- name: DependsOn
-  type: string
-  default: Build
+  - name: CondaArtifacts
+    type: object
+  - name: DependsOn
+    type: string
+    default: Build
 
-stages:
-  # - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-  - stage: Release
-    displayName: 'Conda Release'
-    dependsOn: ${{parameters.DependsOn}}
-    condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-python-pr'))
-    jobs:
-      - deployment: CondaRelease
-        displayName: "Publish Conda Artifact"
-        # environment: pypi
 
-        pool:
-          name: azsdk-pool-mms-ubuntu-2004-general
-          vmImage: MMSUbuntu20.04
+extends:
+  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  ${{ else }}:
+    template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+      sdl:
+        sourceAnalysisPool:
+          name: azsdk-pool-mms-win-2022-1es-pt
+          image: azsdk-pool-mms-win-2022-1espt
+          os: windows
+    stages:
+      # - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+      - stage: Release
+        displayName: 'Conda Release'
+        dependsOn: ${{parameters.DependsOn}}
+        condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-python-pr'))
+        jobs:
+          - deployment: CondaRelease
+            displayName: "Publish Conda Artifact"
+            pool:
+              name: azsdk-pool-mms-ubuntu-2004-general
+              vmImage: MMSUbuntu20.04
 
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - checkout: self
-                - ${{ each artifact in parameters.CondaArtifacts }}:
-                  - pwsh: |
-                      Write-Host "${{ artifact.name }} is ${{ artifact.inBatch }}"
-                    workingDirectory: $(Pipeline.Workspace)
-                    displayName: Output Visible Conda Artifact
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - checkout: self
+                    - ${{ each artifact in parameters.CondaArtifacts }}:
+                        - pwsh: >
+                            Write-Host ${{ artifact.name }} is ${{ artifact.inBatch }}"
+                          workingDirectory: $(Pipeline.Workspace)
+                          displayName: Output Visible Conda Artifact
+
+
+# environment: pypi
