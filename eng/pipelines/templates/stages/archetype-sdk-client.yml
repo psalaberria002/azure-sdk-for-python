@@ -99,7 +99,7 @@ extends:
     stages:
       - stage: Build
         jobs:
-          - template: /eng/pipelines/templates/jobs/ci.yml
+          - template: eng/pipelines/templates/jobs/ci.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               Artifacts: ${{ parameters.Artifacts }}
