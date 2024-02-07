@@ -76,13 +76,6 @@ parameters:
     type: boolean
     default: false
 
-variables:
-  BuildId: $(Build.BuildId)
-  system.debug: ${{ parameters.debug }}
-  REPOROOT: $(Build.SourcesDirectory)
-  WINDOWS_OUTPUTROOT: $(REPOROOT)\out
-  WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
-
 resources:
   repositories:
     - repository: self
@@ -105,7 +98,15 @@ extends:
           image: azsdk-pool-mms-win-2022-1espt
           os: windows
     stages:
+
       - stage: Build
+        variables:
+          BuildId: $(Build.BuildId)
+          system.debug: ${{ parameters.debug }}
+          REPOROOT: $(Build.SourcesDirectory)
+          WINDOWS_OUTPUTROOT: $(REPOROOT)\out
+          WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
+
         jobs:
         # - job: 'Build'
         #   timeoutInMinutes: 90
