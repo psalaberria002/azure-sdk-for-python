@@ -7,6 +7,13 @@ resources:
       name: 1ESPipelineTemplates/1ESPipelineTemplates
       ref: refs/tags/release
 
+variables:
+  BuildId: $(Build.BuildId)
+  system.debug: ${{ parameters.debug }}
+  REPOROOT: $(Build.SourcesDirectory)
+  WINDOWS_OUTPUTROOT: $(REPOROOT)\out
+  WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
+
 parameters:
   - name: ServiceDirectory
     type: string
@@ -84,13 +91,6 @@ parameters:
   - name: AdvancedBuild
     type: boolean
     default: false
-
-variables:
-  BuildId: $(Build.BuildId)
-  system.debug: ${{ parameters.debug }}
-  REPOROOT: $(Build.SourcesDirectory)
-  WINDOWS_OUTPUTROOT: $(REPOROOT)\out
-  WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest' # Docker image which is used for the Build stage 
 
 extends:
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
