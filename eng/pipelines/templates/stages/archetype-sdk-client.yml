@@ -100,18 +100,18 @@ extends:
       - stage: Build
         jobs:
         - job: 'Build'
-            timeoutInMinutes: 90
+          timeoutInMinutes: 90
 
-            pool:
-              name: azsdk-pool-mms-ubuntu-2004-general
-              vmImage: MMSUbuntu20.04
+          pool:
+            name: azsdk-pool-mms-ubuntu-2004-general
+            vmImage: MMSUbuntu20.04
 
-            steps:
-            - pwsh: |
-                Get-ChildItem -Path $(Build.SourcesDirectory) -Recurse | ForEach-Object {
-                  Write-Host $_.FullName
-                }
-              displayName: WHAT IS HAPPENING
+          steps:
+          - pwsh: |
+              Get-ChildItem -Path $(Build.SourcesDirectory) -Recurse | ForEach-Object {
+                Write-Host $_.FullName
+              }
+            displayName: WHAT IS HAPPENING
 
           # - template: eng/pipelines/templates/jobs/ci.yml
           #   parameters:
