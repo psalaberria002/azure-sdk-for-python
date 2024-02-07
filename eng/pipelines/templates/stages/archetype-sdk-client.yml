@@ -106,49 +106,49 @@ extends:
           WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
 
         jobs:
-        # - job: 'Build'
-        #   timeoutInMinutes: 90
+        - job: 'Build'
+          timeoutInMinutes: 90
 
-        #   pool:
-        #     name: azsdk-pool-mms-ubuntu-2004-1es-pt
-        #     vmImage: azsdk-pool-mms-ubuntu-2004-1espt
-        #     os: linux
+          pool:
+            name: azsdk-pool-mms-ubuntu-2004-1es-pt
+            vmImage: azsdk-pool-mms-ubuntu-2004-1espt
+            os: linux
 
-        #   steps:
-        #   - pwsh: |
-        #       Get-ChildItem -Path $(Build.SourcesDirectory) -Recurse | ForEach-Object {
-        #         Write-Host $_.FullName
-        #       }
-        #     displayName: WHAT IS HAPPENING
+          steps:
+          - pwsh: |
+              Get-ChildItem -Path $(Build.SourcesDirectory) -Recurse | ForEach-Object {
+                Write-Host $_.FullName
+              }
+            displayName: WHAT IS HAPPENING
 
-          - template: eng/pipelines/templates/jobs/ci.yml
-            parameters:
-              ServiceDirectory: ${{ parameters.ServiceDirectory }}
-              Artifacts: ${{ parameters.Artifacts }}
-              ${{ if eq(parameters.ServiceDirectory, 'template') }}:
-                TestPipeline: true
-              BeforeTestSteps: ${{ parameters.BeforeTestSteps }}
-              AfterTestSteps: ${{ parameters.AfterTestSteps }}
-              BeforePublishSteps: ${{ parameters.BeforePublishSteps }}
-              TestMarkArgument: ${{ parameters.TestMarkArgument }}
-              BuildTargetingString: ${{ parameters.BuildTargetingString }}'
-              TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-              ToxEnvParallel: ${{ parameters.ToxEnvParallel }}
-              InjectedPackages: ${{ parameters.InjectedPackages }}
-              BuildDocs: ${{ parameters.BuildDocs }}
-              DevFeedName: ${{ parameters.DevFeedName }}
-              MatrixConfigs:
-                - ${{ each config in parameters.MatrixConfigs }}:
-                    - ${{ config }}
-                - ${{ each config in parameters.AdditionalMatrixConfigs }}:
-                    - ${{ config }}
-              MatrixFilters: ${{ parameters.MatrixFilters }}
-              MatrixReplace: ${{ parameters.MatrixReplace }}
-              VerifyAutorest: ${{ parameters.VerifyAutorest }}
-              ValidateFormatting: ${{ parameters.ValidateFormatting }}
-              TestProxy: ${{ parameters.TestProxy }}
-              GenerateApiReviewForManualOnly: ${{ parameters.GenerateApiReviewForManualOnly }}
-              AdvancedBuild: ${{ parameters.AdvancedBuild }}
+          # - template: eng/pipelines/templates/jobs/ci.yml
+          #   parameters:
+          #     ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          #     Artifacts: ${{ parameters.Artifacts }}
+          #     ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          #       TestPipeline: true
+          #     BeforeTestSteps: ${{ parameters.BeforeTestSteps }}
+          #     AfterTestSteps: ${{ parameters.AfterTestSteps }}
+          #     BeforePublishSteps: ${{ parameters.BeforePublishSteps }}
+          #     TestMarkArgument: ${{ parameters.TestMarkArgument }}
+          #     BuildTargetingString: ${{ parameters.BuildTargetingString }}'
+          #     TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          #     ToxEnvParallel: ${{ parameters.ToxEnvParallel }}
+          #     InjectedPackages: ${{ parameters.InjectedPackages }}
+          #     BuildDocs: ${{ parameters.BuildDocs }}
+          #     DevFeedName: ${{ parameters.DevFeedName }}
+          #     MatrixConfigs:
+          #       - ${{ each config in parameters.MatrixConfigs }}:
+          #           - ${{ config }}
+          #       - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+          #           - ${{ config }}
+          #     MatrixFilters: ${{ parameters.MatrixFilters }}
+          #     MatrixReplace: ${{ parameters.MatrixReplace }}
+          #     VerifyAutorest: ${{ parameters.VerifyAutorest }}
+          #     ValidateFormatting: ${{ parameters.ValidateFormatting }}
+          #     TestProxy: ${{ parameters.TestProxy }}
+          #     GenerateApiReviewForManualOnly: ${{ parameters.GenerateApiReviewForManualOnly }}
+          #     AdvancedBuild: ${{ parameters.AdvancedBuild }}
 
       # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
       # - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
