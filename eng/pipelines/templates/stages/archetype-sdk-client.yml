@@ -1,5 +1,7 @@
 resources:
   repositories:
+    - repository: self
+      type: git
     - repository: 1ESPipelineTemplates
       type: git
       name: 1ESPipelineTemplates/1ESPipelineTemplates
