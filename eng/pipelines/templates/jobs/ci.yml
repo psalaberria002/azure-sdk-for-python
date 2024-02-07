@@ -76,6 +76,8 @@ jobs:
         vmImage: MMSUbuntu20.04
 
       steps:
+      - checkout: self
+
       - template: /eng/pipelines/templates/steps/targeting-string-resolve.yml
         parameters:
           BuildTargetingString: ${{ parameters.BuildTargetingString }}
