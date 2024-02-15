@@ -43,6 +43,9 @@ parameters:
   - name: TestProxy
     type: boolean
     default: false
+  - name: OS
+    type: string
+    default: ''
 
 jobs:
   - job:
@@ -64,7 +67,7 @@ jobs:
     pool:
       name: $(Pool)
       image: $(OsVmImage)
-      os: $(os)
+      os: ${{ parameters.OS }}
 
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
       # Add a default so the job doesn't fail when the matrix is empty

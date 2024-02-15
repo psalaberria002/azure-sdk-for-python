@@ -1,0 +1,15 @@
+{
+  "displayNames": {
+    "--disablecov": "",
+    "false": "",
+    "true": ""
+  },
+  "matrix": {
+    "Agent": {
+      "windows-2022": { "OSVmImage": "azsdk-pool-mms-win-2022-1espt", "Pool": "azsdk-pool-mms-win-2022-1es-pt", "os": "windows" }
+    },
+    "PythonVersion": [ "3.8", "3.10" ],
+    "CoverageArg": "--disablecov",
+    "TestSamples": "false"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "displayNames": {
+    "--disablecov": "",
+    "false": "",
+    "true": ""
+  },
+  "matrix": {
+    "Agent": {
+      "macos-11": { "OSVmImage": "macos-latest", "Pool": "Azure Pipelines", "os": "macOs" }
+    },
+    "PythonVersion": [  "3.11" ],
+    "CoverageArg": "--disablecov",
+    "TestSamples": "false"
+  }
+}
