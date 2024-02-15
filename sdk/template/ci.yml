@@ -48,7 +48,7 @@ parameters:
 jobs:
   - ${{ each poolDefinition in parameters.PoolStrategy }}:
     - job:
-      displayName: 'Test ${{ poolDefinition.os }} ${{ toString(poolDefinition.PythonVersion) }}'
+      displayName: 'Test ${{ poolDefinition.os }}' + '${{ poolDefinition.PythonVersion }}' + ''
 
       pool:
         name: azsdk-pool-mms-ubuntu-2004-general
@@ -62,7 +62,7 @@ jobs:
         - task: UsePythonVersion@0
           displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
           inputs:
-            versionSpec: '${{ poolDefinition.PythonVersion }}'
+            versionSpec: '${{ poolDefinition.PythonVersion }}' + ''
 
         - pwsh: |
             python  --version
@@ -70,7 +70,7 @@ jobs:
 
         - template: /eng/pipelines/templates/steps/use-python-version.yml
           parameters:
-            versionSpec: '${{ poolDefinition.PythonVersion }}'
+            versionSpec: '${{ poolDefinition.PythonVersion }}' + ''
 
         - pwsh: |
             python  --version
