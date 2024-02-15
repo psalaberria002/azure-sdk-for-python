@@ -55,14 +55,12 @@ jobs:
         vmImage: "MMSUbuntu20.04"
 
       steps:
-        pwsh: |
+        - pwsh: |
           Write-Host "${{ poolDefinition.PythonVersion }}"
 
         displayName: Output Python Version ${{ poolDefinition.PythonVersion }}
 
-      - task: UsePythonVersion@0
-        displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
-        inputs:
-          versionSpec: '${{ poolDefinition.PythonVersion }}'
-
-``` 
+        - task: UsePythonVersion@0
+          displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
+          inputs:
+            versionSpec: '${{ poolDefinition.PythonVersion }}'
