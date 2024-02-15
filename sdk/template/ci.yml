@@ -1,40 +1,68 @@
-# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+parameters:
+  - name: PoolStrategy
+    type: object
+    default: 
+      - OSVmImage: azsdk-pool-mms-win-2022-1espt
+        Pool: azsdk-pool-mms-win-2022-1es-pt
+        os: windows
+        demands: "ImageOverride -equals windows-2022"
+        PythonVersion: "3.8"
+        CoverageArg: --disablecov
+        TestSamples: false
+      - OSVmImage: azsdk-pool-mms-ubuntu-2004-1espt
+        Pool: azsdk-pool-mms-ubuntu-2004-1es-pt
+        os: linux
+        demands: "ImageOverride -equals ubuntu-20.04"
+        PythonVersion: "pypy3.9"
+        CoverageArg: --disablecov
+        TestSamples: false
+      - OSVmImage: macos-11
+        Pool: Azure Pipelines
+        os: macOS
+        demands: "ImageOverride -equals macos-11"
+        PythonVersion: "3.11"
+        CoverageArg: --disablecov
+        TestSamples: false
+      - OSVmImage: azsdk-pool-mms-win-2022-1espt
+        Pool: azsdk-pool-mms-win-2022-1es-pt
+        os: windows
+        demands: "ImageOverride -equals windows-2022"
+        PythonVersion: "3.10"
+        CoverageArg: --disablecov
+        TestSamples: false
+      - OSVmImage: azsdk-pool-mms-ubuntu-2004-1espt
+        Pool: azsdk-pool-mms-ubuntu-2004-1es-pt
+        os: linux
+        demands: "ImageOverride -equals ubuntu-20.04"
+        PythonVersion: "3.9"
+        CoverageArg: ""
+        TestSamples: false
+      - OSVmImage: azsdk-pool-mms-ubuntu-2004-1espt
+        Pool: azsdk-pool-mms-ubuntu-2004-1es-pt
+        os: linux
+        demands: "ImageOverride -equals ubuntu-20.04"
+        PythonVersion: "3.12"
+        CoverageArg: --disablecov
+        TestSamples: false
 
-trigger:
-  branches:
-    include:
-    - main
-    - hotfix/*
-    - release/*
-    - restapi*
-  paths:
-    include:
-    - sdk/template/
-    - scripts/
-    # NOTE: DO NOT INCLUDE BELOW PATH WHEN COPYING THIS FILE
-    # eng/common code changes trigger template pipeline for basic checking.
-    - eng/common/
+jobs:
+  - ${{ each poolDefinition in parameters.PoolStrategy }}:
+    - job:
+      displayName: 'Test ${{ poolDefinition.os }} ${{ poolDefinition.PythonVersion }}'
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-    - restapi*
-  paths:
-    include:
-    - sdk/template/
-    # NOTE: DO NOT INCLUDE BELOW PATH WHEN COPYING THIS FILE
-    # eng/common code changes trigger template pipeline for basic checking.
-    - eng/common/
+      pool:
+        name: azsdk-pool-mms-ubuntu-2004-general
+        vmImage: "MMSUbuntu20.04"
 
-extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: template
-    ValidateFormatting: true
-    Artifacts:
-    - name: azure-template
-      safeName: azuretemplate
+      steps:
+        pwsh: |
+          Write-Host "${{ poolDefinition.PythonVersion }}"
+
+        displayName: Output Python Version ${{ poolDefinition.PythonVersion }}
+
+      - task: UsePythonVersion@0
+        displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
+        inputs:
+          versionSpec: '${{ poolDefinition.PythonVersion }}'
+
+``` 
