@@ -27,7 +27,7 @@ parameters:
         Pool: azsdk-pool-mms-win-2022-1es-pt
         os: windows
         demands: "ImageOverride -equals windows-2022"
-        PythonVersion: "3.10"
+        PythonVersion: "3.10.*"
         CoverageArg: --disablecov
         TestSamples: false
       - OSVmImage: azsdk-pool-mms-ubuntu-2004-1espt
@@ -56,11 +56,11 @@ jobs:
 
       steps:
         - pwsh: |
-            Write-Host "${{ toString(poolDefinition.PythonVersion) }}"
-          displayName: Output Python Version ${{ toString(poolDefinition.PythonVersion) }}
+            Write-Host "${{ poolDefinition.PythonVersion }}"
+          displayName: Output Python Version ${{ poolDefinition.PythonVersion }}
 
         - task: UsePythonVersion@0
-          displayName: 'Use Python ${{ toString(poolDefinition.PythonVersion) }}'
+          displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
           inputs:
             versionSpec: '${{ poolDefinition.PythonVersion }}'
 
