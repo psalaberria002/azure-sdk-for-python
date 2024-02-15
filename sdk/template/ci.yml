@@ -48,8 +48,12 @@ parameters:
 jobs:
   - ${{ each poolDefinition in parameters.PoolStrategy }}:
     - job:
-      displayName: $[format('Test {0} {1}', poolDefinition.os, poolDefinition.PythonVersion)]
 
+      variables:
+        pythonVersionString:  $[format('{0}', poolDefinition.PythonVersion)]
+
+      displayName: "${{ variables.pythonVersionString }}"
+ 
       pool:
         name: azsdk-pool-mms-ubuntu-2004-general
         vmImage: "MMSUbuntu20.04"
@@ -62,7 +66,7 @@ jobs:
         - task: UsePythonVersion@0
           displayName:  $[format('Use Python {0}', poolDefinition.PythonVersion)]
           inputs:
-            versionSpec:  $[format('Use Python {0}', poolDefinition.PythonVersion)]
+            versionSpec: ${{ variables.pythonVersionString }}
 
         - pwsh: |
             python  --version
@@ -70,7 +74,7 @@ jobs:
 
         - template: /eng/pipelines/templates/steps/use-python-version.yml
           parameters:
-            versionSpec: $[format('Use Python {0}', poolDefinition.PythonVersion)]
+            versionSpec: ${{ variables.pythonVersionString }}
 
         - pwsh: |
             python  --version
