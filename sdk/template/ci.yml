@@ -56,9 +56,8 @@ jobs:
 
       steps:
         - pwsh: |
-          Write-Host "${{ poolDefinition.PythonVersion }}"
-
-        displayName: Output Python Version ${{ poolDefinition.PythonVersion }}
+            Write-Host "${{ poolDefinition.PythonVersion }}"
+          displayName: Output Python Version ${{ poolDefinition.PythonVersion }}
 
         - task: UsePythonVersion@0
           displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
