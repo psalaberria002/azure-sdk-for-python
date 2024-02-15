@@ -67,3 +67,11 @@ jobs:
         - pwsh: |
             python  --version
           displayName: Dump Active Python
+
+        - template: eng/pipelines/templates/steps/use-python-version.yml
+          parameters:
+            versionSpec: '${{ poolDefinition.PythonVersion }}'
+
+        - pwsh: |
+            python  --version
+          displayName: Dump Active Python
