@@ -48,7 +48,7 @@ parameters:
 jobs:
   - ${{ each poolDefinition in parameters.PoolStrategy }}:
     - job:
-      displayName: 'Test ${{ poolDefinition.os }} ${{ poolDefinition.PythonVersion }}'
+      displayName: 'Test ${{ poolDefinition.os }} toString(${{ poolDefinition.PythonVersion }})'
 
       pool:
         name: azsdk-pool-mms-ubuntu-2004-general
@@ -57,7 +57,7 @@ jobs:
       steps:
         - pwsh: |
             Write-Host "${{ poolDefinition.PythonVersion }}"
-          displayName: Output Python Version ${{ poolDefinition.PythonVersion }}
+          displayName: Output Python Version toString(${{ poolDefinition.PythonVersion }})
 
         - task: UsePythonVersion@0
           displayName: 'Use Python ${{ poolDefinition.PythonVersion }}'
