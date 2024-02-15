@@ -272,7 +272,7 @@ jobs:
           - 'CoalesceBuildArtifacts'
       MatrixConfigs:      
         - Name: Python_ci_test_base
-          Path: eng/pipelines/templates/stages/platform-matrix-mac-only.json
+          Path: eng/pipelines/templates/stages/platform-matrix-macos-only.json
           Selection: sparse
           GenerateVMJobs: true
       MatrixFilters: ${{ parameters.MatrixFilters }}
