@@ -6,7 +6,7 @@
   },
   "matrix": {
     "Agent": {
-      "macos-11": { "OSVmImage": "macos-latest", "Pool": "Azure Pipelines", "os": "macOs" }
+      "macos-11": { "OSVmImage": "macos-11", "Pool": "Azure Pipelines", "os": "macOS" }
     },
     "PythonVersion": [  "3.11" ],
     "CoverageArg": "--disablecov",
