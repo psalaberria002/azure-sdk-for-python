@@ -142,6 +142,13 @@ extends:
           name: azsdk-pool-mms-win-2022-1es-pt
           image: azsdk-pool-mms-win-2022-1espt
           os: windows
+        eslint:
+          enabled: false
+          justificationForDisabling: "ESLint injected task has failures because it uses an old version of mkdirp. We should not fail that we don't own having old deps. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746&"
+        codeql:
+          compiled:
+            enabled: false
+            justificationForDisabling: "CodeQL times our pipelines out by running for 2+ hours before being force canceled."
         credscan:
           suppressionsFile: '$(Build.SourcesDirectory)/eng/CredScanSuppression.json'
           scanFolder: '$(Build.SourcesDirectory)/credscan.tsv'

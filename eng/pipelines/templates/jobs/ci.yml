@@ -230,7 +230,6 @@ jobs:
         ValidateFormatting: ${{ parameters.ValidateFormatting }}
         GenerateApiReviewForManualOnly: ${{ parameters.GenerateApiReviewForManualOnly }}
 
-
   - template: /eng/pipelines/templates/jobs/ci.tests.yml
     parameters:
       ServiceDirectory: ${{ parameters.ServiceDirectory }}
