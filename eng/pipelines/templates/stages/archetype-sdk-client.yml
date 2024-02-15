@@ -149,6 +149,10 @@ extends:
           compiled:
             enabled: false
             justificationForDisabling: "CodeQL times our pipelines out by running for 2+ hours before being force canceled."
+        psscriptanalyzer:
+          enabled: true
+          break: true
+        policy: M365
         credscan:
           suppressionsFile: '$(Build.SourcesDirectory)/eng/CredScanSuppression.json'
           scanFolder: '$(Build.SourcesDirectory)/credscan.tsv'
