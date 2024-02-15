@@ -230,6 +230,7 @@ jobs:
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+      GenerateJobName: generate_linux_matrix
       OsVmImage: azsdk-pool-mms-ubuntu-2004-1espt
       Pool: azsdk-pool-mms-ubuntu-2004-1es-pt
       DependsOn:
@@ -262,6 +263,7 @@ jobs:
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+      GenerateJobName: generate_mac_matrix
       OsVmImage: azsdk-pool-mms-ubuntu-2004-1espt
       Pool: azsdk-pool-mms-ubuntu-2004-1es-pt
       DependsOn:
@@ -294,6 +296,7 @@ jobs:
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+      GenerateJobName: generate_windows_matrix
       OsVmImage: azsdk-pool-mms-ubuntu-2004-1espt
       Pool: azsdk-pool-mms-ubuntu-2004-1es-pt
       DependsOn:
