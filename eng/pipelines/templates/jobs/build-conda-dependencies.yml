@@ -82,10 +82,36 @@ jobs:
 - job: 'Build_Linux_Dependencies'
   displayName: 'Build Linux Dependencies'
   timeoutInMinutes: 90
+
+  variables:
+    condaVersion: "23.9.0"
+
   pool:
     name: azsdk-pool-mms-ubuntu-2004-general
     vmImage: MMSUbuntu20.04
   steps:
+    - script: |
+        echo "##vso[task.setvariable variable=PATH;]$(Agent.ToolsDirectory)/miniconda/$(condaVersion)/x64/bin:$(PATH)"
+        mkdir -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)/x64
+        curl -sSLo $(Agent.ToolsDirectory)/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-$(condaVersion)-Linux-x86_64.sh
+        bash $(Agent.ToolsDirectory)/miniconda.sh -b -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)/x64
+        rm $(Agent.ToolsDirectory)/miniconda.sh
+      displayName: 'Install Conda on Linux'
+      condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
+
+    - script: |
+        choco install miniconda3 --version $(condaVersion) --params="'/AddToPath:0 /D'"
+      displayName: 'Install Conda on Windows'
+      condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows'))
+
+    - script: |
+        echo "##vso[task.setvariable variable=PATH;]$(Agent.ToolsDirectory)/miniconda/$(condaVersion):$(PATH)"
+        curl -sSLo $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh
+        bash $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh -b -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)
+        rm $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh
+      displayName: 'Install Conda on macOS'
+      condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
+
     - bash: |
         sudo apt-get install -y build-essential
       displayName: Install Requirements
