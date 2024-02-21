@@ -26,7 +26,7 @@ steps:
       $argContent = @'
         convertToJson(parameters.CondaArtifacts)
       '@
-      $argFile = $(Agent.TempDirectory)/conda-args.json
+      $argFile = "$(Agent.TempDirectory)/conda-args.json"
 
       Set-Content -Path $argFile -Value $argContent
 
