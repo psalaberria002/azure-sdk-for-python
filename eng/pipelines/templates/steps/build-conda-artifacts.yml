@@ -30,6 +30,8 @@ steps:
 
       Set-Content -Path $argFile -Value $argContent
 
+      cat $argFile
+
       sdk_build_conda -f "$argFile" ${{ parameters.Arguments }}
     displayName: Assemble Conda Packages
   
