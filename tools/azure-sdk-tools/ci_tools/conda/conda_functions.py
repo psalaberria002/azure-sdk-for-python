@@ -326,22 +326,6 @@ def prep_directory(path: str) -> str:
     return path
 
 
-def get_output(command: str, working_directory: str) -> None:
-    try:
-        command = shlex.split(command)
-        wd = working_directory.replace("\\", "/")
-
-        p = subprocess.Popen(command, cwd=wd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        output, err = p.communicate()
-        print(str(output.decode()))
-        print(str(err.decode()))
-        if p.returncode > 0:
-            raise CalledProcessError(p.returncode, output=str(output) + str(err))
-    except CalledProcessError as e:
-        print(str(e))
-        raise
-
-
 def invoke_command(command: str, working_directory: str) -> None:
     try:
         command = shlex.split(command)
@@ -609,7 +593,7 @@ def invoke_conda_build(
         command += f" --py {optional_py_version}"
 
     print(f"Calling '{command}' in folder {conda_build_folder}.")
-    get_output(command, conda_build_folder)
+    subprocess.run(command, cwd=conda_build_folder, check=True)
 
 
 def check_conda_config():
