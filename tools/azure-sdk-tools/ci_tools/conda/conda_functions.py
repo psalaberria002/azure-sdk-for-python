@@ -525,7 +525,7 @@ def prep_and_create_environment(environment_dir: str) -> None:
     print(environment_dir)
     print(os.listdir(environment_dir))
 
-    subprocess.run(f'conda env create --prefix "{environment_dir}"', cwd=environment_dir, check=True)
+    subprocess.run(["conda", "env", "create", "--prefix", environment_dir], cwd=environment_dir, check=True)
     subprocess.run(
         f'conda install --yes --quiet --prefix "{environment_dir}" conda-build conda-verify typing-extensions conda-index',
         cwd=environment_dir,
@@ -641,10 +641,8 @@ def entrypoint():
     if args.config_file:
         with open(args.config_file, "r") as f:
             content = f.read()
-            print(content)
             json_configs = json.loads(content)
     else:
-        print(args.config)
         json_configs = json.loads(args.config)
 
     check_conda_config()
