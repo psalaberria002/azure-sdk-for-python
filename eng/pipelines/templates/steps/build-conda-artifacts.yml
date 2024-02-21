@@ -23,8 +23,8 @@ steps:
     displayName: Install build script requirements
 
   - pwsh: |
-      $argContent = @'
-        convertToJson(parameters.CondaArtifacts)
+      $argument = @'
+      ${{ convertToJson(parameters.CondaArtifacts) }}
       '@
       $argFile = "$(Agent.TempDirectory)/conda-args.json"
 
