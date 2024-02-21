@@ -33,10 +33,7 @@ steps:
     displayName: "Convert YAML to JSON-like string"
 
   - pwsh: |
-      $argument = @'
-      ${{ replace(convertToJson(parameters.CondaArtifacts), '"', '\"') }}
-      '@
-
+      Write-Host "$(conda_artifact_arg)"
       sdk_build_conda -c "$(conda_artifact_arg)" ${{ parameters.Arguments }}
     displayName: Assemble Conda Packages
   
