@@ -517,10 +517,13 @@ def assemble_source(conda_configurations: List[CondaConfiguration], repo_root: s
 
 
 def prep_and_create_environment(environment_dir: str) -> None:
-    prep_directory(environment_dir)
+    environment_dir = prep_directory(environment_dir)
 
     with open(os.path.join(environment_dir, "environment.yml"), "w", encoding="utf-8") as f:
         f.write(CONDA_ENV_FILE)
+
+    print(environment_dir)
+    print(os.listdir(environment_dir))
 
     subprocess.run(f'conda env create --prefix "{environment_dir}"', cwd=environment_dir, check=True)
     subprocess.run(
