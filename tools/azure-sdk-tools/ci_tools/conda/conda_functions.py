@@ -636,11 +636,12 @@ def entrypoint():
 
     if args.config_file:
         with open(args.config_file, "r") as f:
-            json_configs = json.load(f)
+            content = f.read()
+            print(content)
+            json_configs = json.loads(content)
     else:
+        print(args.config)
         json_configs = json.loads(args.config)
-
-    print(json_configs)
 
     check_conda_config()
 
