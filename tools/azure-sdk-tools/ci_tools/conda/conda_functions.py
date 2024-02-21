@@ -527,7 +527,7 @@ def prep_and_create_environment(environment_dir: str) -> None:
 
     subprocess.run(["conda", "env", "create", "--prefix", environment_dir], cwd=environment_dir, check=True)
     subprocess.run(
-        f'conda install --yes --quiet --prefix "{environment_dir}" conda-build conda-verify typing-extensions conda-index',
+        ["conda", "install", "--yes", "--quiet", "--prefix", "{environment_dir}", "conda-build", "conda-verify", "typing-extensions", "conda-index"],
         cwd=environment_dir,
         check=True
     )
@@ -569,9 +569,9 @@ def build_conda_packages(
     if additional_channel_folders:
         for channel in additional_channel_folders:
             copy_channel_files(conda_output_dir, channel)
-            subprocess.run(f'conda run --prefix "{conda_env_dir}" conda index {conda_output_dir}', cwd=repo_root, check=True)
+            subprocess.run(["conda", "run", "--prefix", "{conda_env_dir}", "conda", "index", "{conda_output_dir}"], cwd=repo_root, check=True)
     else:
-        subprocess.run(f'conda run --prefix "{conda_env_dir}" conda index {conda_output_dir}', cwd=repo_root, check=True)
+        subprocess.run(["conda", "run", "--prefix", "{conda_env_dir}", "conda", "index", "{conda_output_dir}"], cwd=repo_root, check=True)
 
     for conda_build in conda_configurations:
         conda_build_folder = os.path.join(conda_sdist_dir, conda_build.name).replace("\\", "/")
@@ -591,10 +591,10 @@ def invoke_conda_build(
     channels: List[str] = [],
 ) -> None:
     channel_suffix = " ".join([f'-c "{channel}"' for channel in channels])
-    command = f'conda run --prefix "{conda_env_dir}" conda-build . --output-folder "{conda_output_dir}" -c "{conda_output_dir}" {channel_suffix}'
+    command = ["conda", "run", "--prefix", "{conda_env_dir}", "conda-build", ".", "--output-folder", "{conda_output_dir}", "-c", "{conda_output_dir}", "{channel_suffix}"]
 
     if optional_py_version:
-        command += f" --py {optional_py_version}"
+        command.extend(["--py", "{optional_py_version}"])
 
     print(f"Calling '{command}' in folder {conda_build_folder}.")
     subprocess.run(command, cwd=conda_build_folder, check=True)
