@@ -590,11 +590,13 @@ def invoke_conda_build(
     optional_py_version: str = None,
     channels: List[str] = [],
 ) -> None:
-    channel_suffix = " ".join([f'-c "{channel}"' for channel in channels])
-    command = ["conda", "run", "--prefix", conda_env_dir, "conda-build", ".", "--output-folder", conda_output_dir, "-c", conda_output_dir, channel_suffix]
+
+    command = ["conda", "run", "--prefix", conda_env_dir, "conda-build", ".", "--output-folder", conda_output_dir, "-c", conda_output_dir]
+    for channel in channels:
+        command.extend(["-c", channel])
 
     if optional_py_version:
-        command.extend(["--py", "{optional_py_version}"])
+        command.extend(["--py", optional_py_version])
 
     print(f"Calling '{command}' in folder {conda_build_folder}.")
     subprocess.run(command, cwd=conda_build_folder, check=True)
