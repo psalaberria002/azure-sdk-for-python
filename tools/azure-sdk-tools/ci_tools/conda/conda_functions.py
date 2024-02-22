@@ -531,6 +531,12 @@ def prep_and_create_environment(environment_dir: str) -> None:
         cwd=environment_dir,
         check=True
     )
+    subprocess.run(
+        ["conda", "run", "--prefix", environment_dir, "conda", "list"],
+        cwd=environment_dir,
+        check=True
+    )
+
 
 
 def copy_channel_files(coalescing_channel_dir: str, additional_channel_dir: str) -> None:
