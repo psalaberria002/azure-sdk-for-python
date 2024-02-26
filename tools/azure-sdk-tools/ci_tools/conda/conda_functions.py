@@ -632,14 +632,32 @@ def entrypoint():
         "--config",
         dest="config",
         help="The json blob describing which conda packages should be assembled.",
-        required=True,
+        required=False,
+    )
+
+    parser.add_argument(
+        "-f",
+        "--file",
+        dest="config_file",
+        help="A file describing where",
+        required=False,
     )
 
     parser.add_argument("--channel", dest="channel", action="extend", nargs="+", type=str)
 
     args = parser.parse_args()
 
-    json_configs = json.loads(args.config)
+    if (not args.config and not args.config_file):
+        raise argparse.ArgumentError("config arg", "One of either -c (--config) or -f (--file) argument must be provided.")
+
+    if args.config_file:
+        with open(args.config_file, "r") as f:
+            content = f.read()
+            json_configs = json.loads(content)
+    else:
+        json_configs = json.loads(args.config)
+
+    print(f"Invoking build script run for the following configurations: {json_configs}")
 
     check_conda_config()
 
