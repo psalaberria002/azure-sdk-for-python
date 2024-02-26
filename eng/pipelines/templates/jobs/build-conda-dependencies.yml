@@ -7,6 +7,7 @@ jobs:
 - job: 'Build_Windows_Dependencies'
   displayName: 'Build Windows Dependencies'
   timeoutInMinutes: 90
+  condition: false
   pool:
     name: azsdk-pool-mms-win-2022-general
     vmImage: MMS2022
@@ -15,9 +16,9 @@ jobs:
     VS_INSTALLER_PATH: "$(Build.BinariesDirectory)/vs_enterprise.exe"
     VS_ENTERPRISE_PATH: "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise"
   steps:
-    - bash: |
-        echo "##vso[task.prependpath]$(CONDA)/Scripts"
-      displayName: 'Prepend PATH with Conda'
+    # - bash: |
+    #     echo "##vso[task.prependpath]$(CONDA)/Scripts"
+    #   displayName: 'Prepend PATH with Conda'
 
     - task: UsePythonVersion@0
       displayName: 'Use Python $(PythonVersion)'
@@ -90,10 +91,13 @@ jobs:
     name: azsdk-pool-mms-ubuntu-2004-general
     vmImage: MMSUbuntu20.04
   steps:
+
+    # https://repo.anaconda.com/miniconda/Miniconda3-23.9.0-Linux-x86_64.sh
+
     - script: |
         echo "##vso[task.setvariable variable=PATH;]$(Agent.ToolsDirectory)/miniconda/$(condaVersion)/x64/bin:$(PATH)"
-        mkdir -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)/x64
-        curl -sSLo $(Agent.ToolsDirectory)/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-$(condaVersion)-Linux-x86_64.sh
+        mkdir -p "~/miniconda/$condaVersion/x64"
+        curl -sSLo $(Agent.ToolsDirectory)/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py311_23.9.0-0-Linux-x86_64.sh
         bash $(Agent.ToolsDirectory)/miniconda.sh -b -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)/x64
         rm $(Agent.ToolsDirectory)/miniconda.sh
       displayName: 'Install Conda on Linux'
@@ -124,6 +128,7 @@ jobs:
 - job: 'Build_Mac_Dependencies'
   displayName: 'Build Mac Dependencies'
   timeoutInMinutes: 90
+  condition: false
   pool:
     name: Azure Pipelines
     vmImage: macos-11
