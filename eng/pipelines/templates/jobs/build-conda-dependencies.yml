@@ -103,18 +103,18 @@ jobs:
       displayName: 'Install Conda on Linux'
       condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
-    - script: |
-        choco install miniconda3 --version $(condaVersion) --params="'/AddToPath:0 /D'"
-      displayName: 'Install Conda on Windows'
-      condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows'))
+    # - script: |
+    #     choco install miniconda3 --version $(condaVersion) --params="'/AddToPath:0 /D'"
+    #   displayName: 'Install Conda on Windows'
+    #   condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows'))
 
-    - script: |
-        echo "##vso[task.setvariable variable=PATH;]$(Agent.ToolsDirectory)/miniconda/$(condaVersion):$(PATH)"
-        curl -sSLo $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh
-        bash $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh -b -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)
-        rm $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh
-      displayName: 'Install Conda on macOS'
-      condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
+    # - script: |
+    #     echo "##vso[task.setvariable variable=PATH;]$(Agent.ToolsDirectory)/miniconda/$(condaVersion):$(PATH)"
+    #     curl -sSLo $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh
+    #     bash $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh -b -p $(Agent.ToolsDirectory)/miniconda/$(condaVersion)
+    #     rm $(Agent.ToolsDirectory)/Miniconda3-$(condaVersion)-MacOSX-x86_64.sh
+    #   displayName: 'Install Conda on macOS'
+    #   condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
 
     - bash: |
         sudo apt-get install -y build-essential

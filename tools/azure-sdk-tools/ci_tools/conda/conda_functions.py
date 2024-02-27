@@ -531,11 +531,6 @@ def prep_and_create_environment(environment_dir: str) -> None:
         cwd=environment_dir,
         check=True
     )
-    subprocess.run(
-        ["conda", "run", "--prefix", environment_dir, "conda", "list"],
-        cwd=environment_dir,
-        check=True
-    )
 
 
 
@@ -575,9 +570,9 @@ def build_conda_packages(
     if additional_channel_folders:
         for channel in additional_channel_folders:
             copy_channel_files(conda_output_dir, channel)
-            subprocess.run(["conda", "run", "--prefix", conda_env_dir, "conda", "index", conda_output_dir], cwd=repo_root, check=True)
+            subprocess.run(["conda", "run", "--prefix", conda_env_dir, "python", "-m", "conda_index", conda_output_dir], cwd=repo_root, check=True)
     else:
-        subprocess.run(["conda", "run", "--prefix", conda_env_dir, "conda", "index", conda_output_dir], cwd=repo_root, check=True)
+        subprocess.run(["conda", "run", "--prefix", conda_env_dir, "python", "-m", "conda_index", conda_output_dir], cwd=repo_root, check=True)
 
     for conda_build in conda_configurations:
         conda_build_folder = os.path.join(conda_sdist_dir, conda_build.name).replace("\\", "/")
