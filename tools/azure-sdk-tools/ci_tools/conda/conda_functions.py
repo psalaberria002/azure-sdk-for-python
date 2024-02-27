@@ -597,7 +597,7 @@ def invoke_conda_build(
         command.extend(["-c", channel])
 
     if optional_py_version:
-        command.extend(["--py", optional_py_version])
+        command.extend(["--py", f"{optional_py_version}"])
 
     print(f"Calling '{command}' in folder {conda_build_folder}.")
     subprocess.run(command, cwd=conda_build_folder, check=True)
