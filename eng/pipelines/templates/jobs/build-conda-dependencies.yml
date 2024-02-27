@@ -7,7 +7,6 @@ jobs:
 - job: 'Build_Windows_Dependencies'
   displayName: 'Build Windows Dependencies'
   timeoutInMinutes: 90
-  condition: false
   pool:
     name: azsdk-pool-mms-win-2022-general
     vmImage: MMS2022
@@ -128,7 +127,6 @@ jobs:
 - job: 'Build_Mac_Dependencies'
   displayName: 'Build Mac Dependencies'
   timeoutInMinutes: 90
-  condition: false
   pool:
     name: Azure Pipelines
     vmImage: macos-11
