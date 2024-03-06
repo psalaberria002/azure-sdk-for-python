@@ -150,7 +150,7 @@ jobs:
           BeforePublishSteps: ${{ parameters.BeforePublishSteps }}
           TestPipeline: ${{ parameters.TestPipeline }}
           Artifacts: ${{ parameters.Artifacts }}
-          ArtifactSuffix: macos
+          ArtifactSuffix: mac
 
     - job: 'CoalesceBuildArtifacts'
       displayName: Combine Built Artifacts
